@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+g++ -fsanitize=undefined -O3 -Wall -std=c++17 -D SIZE=$1 -o skinny_keyDependent skinny_keyDependent.cpp skinny.cpp SAT.cpp -lcryptominisat5
+
+./skinny_keyDependent
+# valgrind --tool=callgrind ./skinny_keyDependent
+
+
+# g++ -o sat SAT.cpp -std=c++11 -lcryptominisat5
+# ./sat
