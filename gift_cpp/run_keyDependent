@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
 
-g++ -fsanitize=undefined -O3 -Wall -std=c++17 -D SIZE=$1 -o gift_keyDependent gift_keyDependent5.cpp gift.cpp gaussianElimination.cpp SAT.cpp -lcryptominisat5
+g++ -fsanitize=undefined -O3 -Wall -std=c++17 -D SIZE=$1 -o gift_keyDependent gift_keyDependent.cpp gift.cpp gaussianElimination.cpp SAT.cpp -lcryptominisat5
 
 ./gift_keyDependent
