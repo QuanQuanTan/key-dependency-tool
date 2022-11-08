@@ -1,6 +1,6 @@
 # key-dependency-tool
 
-This tool can help in verifying if a differential characteristic has any key/round dependencies based on the values that allow the differences to pass. Currently, we only support AES, DEOXYS-TBC, SKINNY and GIFT block ciphers. <br>
+This tool can help in verifying if a differential characteristic has any key/round dependencies based on the values that allow the differences to pass. Currently, we only support SKINNY and GIFT block ciphers. <br>
 The tools can be found under their respective folders.<br>
 Note that CryptominiSAT has to be installed prior to running the program (for GIFT).<br>
 To compile the files, just simply run <br>
