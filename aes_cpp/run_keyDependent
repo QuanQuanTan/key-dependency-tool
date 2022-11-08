@@ -1,9 +1,0 @@
-#!/bin/bash
-set -e
-
-# g++ -fsanitize=undefined -O3 -Wall -std=c++17 -o deoxys_keyDependent deoxys_keyDependent.cpp deoxys.cpp SAT.cpp -lcryptominisat5
-
-# ./deoxys_keyDependent
-
-g++ -fsanitize=undefined -O3 -Wall -std=c++17 -o aes_keyDependent aes_keyDependent.cpp aes.cpp
-./aes_keyDependent
