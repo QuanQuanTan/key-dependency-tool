@@ -27,7 +27,7 @@ uint8_t getConstants(uint8_t val);
 uint8_t getPermSchedule(uint8_t val);
 uint8_t getInvPermSchedule(uint8_t val);
 // for 4 bit skinny
-#if SIZE == 4
+#if SIZE==4
 void computeDDT(int DDT[16][16]);
 uint8_t LFSR(uint8_t n, int v);
 uint8_t invLFSR(uint8_t n, int v);
@@ -44,7 +44,7 @@ uint8_t getInvSbox(uint8_t val);
 
 
 // for the 8 bit skinny
-#elif SIZE == 8
+#elif SIZE==8
 void computeDDT8(int DDT[256][256]);
 uint8_t getSbox8(uint8_t val);
 uint8_t getInvSbox8(uint8_t val);

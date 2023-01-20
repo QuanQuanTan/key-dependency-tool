@@ -50,7 +50,7 @@ void printConstraint(vector<uint32_t> constraint){
 	}
 }
 
-void printConstraints(vector<vector<uint32_t>> constraints){
+void printAllConstraints(vector<vector<uint32_t>> constraints){
 	// for printing purposes only
 	int max_n = 0; // this computes the maximum round of all constraints
 	for (int i = 0; i < constraints.size(); i++)
@@ -90,11 +90,8 @@ void printConstraints(vector<vector<uint32_t>> constraints){
 		if (isLinear(constraints[i])) cout << "linear" << endl;
 		else cout << "nonlinear" << endl;
 	}
-	for (uint32_t i = 0; i < sameRoundConstraints.size(); i++){
-		vector<uint32_t> key; 
-		for (int k = 0; k < sameRoundConstraints[i].size(); k++){
-			if (((sameRoundConstraints[i][k] >> (2*SIZE)) & 0xf) < 8) key.push_back(sameRoundConstraints[i][k]);
-		}
+	for (uint32_t i = 0; i < HOLinearConstraints.size(); i++){
+		vector<uint32_t> key = HOLinearKeys[i];
 		vector<int> positions;
 		for (int k = 0; k < key.size(); k++){
 			int n = key[k] >> (4+2*SIZE);
@@ -107,7 +104,46 @@ void printConstraints(vector<vector<uint32_t>> constraints){
 			positions.push_back(pos);
 		}
 		for (int k = 0; k < positions.size(); k++) cout << positions[k] << " ";
-		printConstraint(sameRoundConstraints[i]);
+		printConstraint(HOLinearConstraints[i]);
 		cout << " higher-order linear" << endl;
+	}
+}
+
+void printConstraints(vector<vector<uint32_t>> constraints){
+	// for printing purposes only
+	int max_n = 0; // this computes the maximum round of all constraints
+	for (int i = 0; i < constraints.size(); i++)
+	{
+		for (int j = 0; j < constraints[i].size(); j++)
+		{
+			if ((constraints[i][j] >> (4+2*SIZE)) > max_n)
+			{
+				max_n = (constraints[i][j] >> (4+2*SIZE));
+			}
+		}
+	}
+	for (uint32_t i = 0; i < constraints.size(); i++){
+		int last_n = constraints[i][constraints[i].size()-1] >> (4 + 2*SIZE); // last_n is the max round of this particular constraint
+		vector<uint32_t> key; 
+		for (int k = 0; k < constraints[i].size(); k++){
+			if (((constraints[i][k] >> (2*SIZE)) & 0xf) < 8) key.push_back(constraints[i][k]);
+		}
+		vector<int> positions;
+		for (int k = 0; k < key.size(); k++){
+			int n = key[k] >> (4+2*SIZE);
+			if (n == last_n) continue; // key is not involved when it is on the last round
+			int pos = (key[k] >> (2*SIZE)) & 0xf;
+			while (n < max_n)
+			{
+				pos = getInvPermSchedule(pos);
+				n++;
+			}
+			positions.push_back(pos);
+		}
+		for (int k = 0; k < positions.size(); k++) cout << hex << positions[k] << " ";
+		printConstraint(constraints[i]);
+		if ((constraints[i][constraints[i].size()-2] >> (4+2*SIZE)) == last_n) cout << "higher order" << endl;
+		else if (isLinear(constraints[i])) cout << "linear" << endl;
+		else cout << "nonlinear" << endl;
 	}
 }
